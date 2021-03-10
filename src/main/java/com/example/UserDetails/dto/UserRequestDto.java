@@ -24,4 +24,5 @@ public class UserRequestDto {
 
     private List<Education> education;
     private List<Employment> employment;
+    private String[] category;
 }

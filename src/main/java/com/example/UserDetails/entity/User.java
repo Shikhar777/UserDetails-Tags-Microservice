@@ -4,6 +4,7 @@ package com.example.UserDetails.entity;
 import lombok.Data;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Entity(name = "userquora")
 @Data
-public class User {
+public class User extends BaseEntity{
 
     @Id
     @GenericGenerator(name = "user_id_seq", strategy = "increment")
@@ -38,5 +39,9 @@ public class User {
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Employment> employment;
+
+    @Type(type = "string-array")
+    @Column(columnDefinition = "text[]")
+    private String[] category;
 
 }
