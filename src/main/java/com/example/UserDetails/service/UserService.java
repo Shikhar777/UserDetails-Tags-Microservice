@@ -11,4 +11,5 @@ public interface UserService {
     UserResponseDto saveDetails(UserRequestDto userRequestDto);
     List<User> findAll();
     UserResponseDto getByUserName(String username);
+
 }

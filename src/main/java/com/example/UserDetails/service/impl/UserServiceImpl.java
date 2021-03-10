@@ -5,6 +5,7 @@ import com.example.UserDetails.dto.UserRequestDto;
 import com.example.UserDetails.dto.UserResponseDto;
 import com.example.UserDetails.entity.User;
 import com.example.UserDetails.repository.UserRepository;
+import com.example.UserDetails.service.ProducerService;
 import com.example.UserDetails.service.UserService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,11 +21,15 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private ProducerService producerService;
+
     @Override
     public UserResponseDto saveDetails(UserRequestDto userRequestDto)
     {
         User user = new User();
         BeanUtils.copyProperties(userRequestDto, user);
+        producerService.sendMessageToSearchAfterUpdation(user);
         User savedUser = userRepository.save(user);
         UserResponseDto userResponseDto = new UserResponseDto();
         BeanUtils.copyProperties(savedUser, userResponseDto);
