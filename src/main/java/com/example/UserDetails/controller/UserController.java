@@ -2,8 +2,11 @@ package com.example.UserDetails.controller;
 
 import com.example.UserDetails.dto.UserRequestDto;
 import com.example.UserDetails.dto.UserResponseDto;
+import com.example.UserDetails.dto.UserUpdateRequestDto;
+import com.example.UserDetails.dto.UserUpdateResponseDto;
 import com.example.UserDetails.entity.User;
 import com.example.UserDetails.service.UserService;
+import org.apache.kafka.common.protocol.types.Field;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,5 +36,11 @@ public class UserController {
     public UserResponseDto findByUserName(String username)
     {
         return userService.getByUserName(username);
+    }
+
+    @PutMapping(value = "/updateUser/{username}")
+    public UserUpdateResponseDto updateUser(@PathVariable("username") String username, @RequestBody UserUpdateRequestDto userRequestDto)
+    {
+        return userService.updateUserDetails(username, userRequestDto);
     }
 }

@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Entity(name = "userquora")
@@ -20,8 +21,8 @@ public class User extends BaseEntity{
     @GenericGenerator(name = "user_id_seq", strategy = "increment")
     @GeneratedValue(generator = "user_id_seq", strategy = GenerationType.AUTO)
     private Long userId;
-    @NotBlank
-    @Size(min = 1, max = 100)
+    //@NotBlank
+    //@Size(min = 1, max = 100)
     private String firstName;
     private String lastName;
     @Column(unique = true)
@@ -29,7 +30,7 @@ public class User extends BaseEntity{
     private String profileCredential;
     private String address;
     @CreationTimestamp
-    @Column(updatable = false)
+    @Column
     private LocalDateTime joiningDate;
     private String bio;
     private String profileImage;

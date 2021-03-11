@@ -4,12 +4,11 @@ import com.example.UserDetails.entity.Education;
 import com.example.UserDetails.entity.Employment;
 import lombok.Data;
 
-import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
-public class UserResponseDto {
+public class UserUpdateRequestDto {
 
     private String firstName;
     private String lastName;
