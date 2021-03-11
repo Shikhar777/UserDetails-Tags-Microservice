@@ -21,6 +21,7 @@ public class UserRequestDto {
     private LocalDateTime joiningDate;
     private String bio;
     private String profileImage;
+    private String email;
 
     private List<Education> education;
     private List<Employment> employment;

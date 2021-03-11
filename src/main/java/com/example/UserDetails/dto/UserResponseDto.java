@@ -13,6 +13,7 @@ public class UserResponseDto {
 
     private String firstName;
     private String lastName;
+    private String email;
     private String profileCredential;
     private String address;
     private String bio;

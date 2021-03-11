@@ -45,4 +45,7 @@ public class User extends BaseEntity{
     @Column(columnDefinition = "text[]")
     private String[] category;
 
+    @Column(unique = true)
+    private String email;
+
 }
