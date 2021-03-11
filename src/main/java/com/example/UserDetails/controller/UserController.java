@@ -32,8 +32,8 @@ public class UserController {
         return userService.findAll();
     }
 
-    @GetMapping(value = "/findByUserName")
-    public UserResponseDto findByUserName(String username)
+    @GetMapping(value = "/findByUserName/{username}")
+    public UserResponseDto findByUserName(@PathVariable("username") String username)
     {
         return userService.getByUserName(username);
     }

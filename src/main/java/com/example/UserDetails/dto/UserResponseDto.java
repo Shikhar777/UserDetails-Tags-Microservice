@@ -20,4 +20,5 @@ public class UserResponseDto {
     private String profileImage;
     private List<Education> education;
     private List<Employment> employment;
+    private String[] category;
 }
