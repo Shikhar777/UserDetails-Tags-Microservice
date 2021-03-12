@@ -9,7 +9,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.NotBlank;
 
-@Entity(name = "bagde")
+@Entity(name = "badge")
 @Data
 public class Badge {
     @Id
