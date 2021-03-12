@@ -16,8 +16,11 @@ public class UserRequestDto {
     private String firstName;
     private String lastName;
     private String username;
-    private String profileCredential;
-    private String address;
+    private String profession;
+    private String city;
+    private String country;
+    private String state;
+
     private LocalDateTime joiningDate;
     private String bio;
     private String profileImage;

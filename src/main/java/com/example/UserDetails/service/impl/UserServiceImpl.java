@@ -45,11 +45,13 @@ public class UserServiceImpl implements UserService {
         User name = new User();
         //BeanUtils.copyProperties(userUpdateRequestDto, name);
         name = userRepository.findByUserName(username);
-        name.setAddress(userUpdateRequestDto.getAddress());
+        name.setCountry(userUpdateRequestDto.getCountry());
+        name.setCity(userUpdateRequestDto.getCity());
+        name.setState(userUpdateRequestDto.getState());
         name.setBio(userUpdateRequestDto.getBio());
         name.setFirstName(userUpdateRequestDto.getFirstName());
         name.setLastName(userUpdateRequestDto.getLastName());
-        name.setProfileCredential(userUpdateRequestDto.getProfileCredential());
+        name.setProfession(userUpdateRequestDto.getProfession());
         name.setEducation(userUpdateRequestDto.getEducation());
         name.setEmployment(userUpdateRequestDto.getEmployment());
         name.setProfileImage(userUpdateRequestDto.getProfileImage());

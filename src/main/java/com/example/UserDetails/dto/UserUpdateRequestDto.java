@@ -12,8 +12,10 @@ public class UserUpdateRequestDto {
 
     private String firstName;
     private String lastName;
-    private String profileCredential;
-    private String address;
+    private String profession;
+    private String city;
+    private String country;
+    private String state;
     private String bio;
     private String profileImage;
     private List<Education> education;
