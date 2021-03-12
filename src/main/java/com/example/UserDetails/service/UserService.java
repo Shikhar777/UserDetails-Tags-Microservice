@@ -14,4 +14,6 @@ public interface UserService {
     List<User> findAll();
     UserResponseDto getByUserName(String username);
     UserUpdateResponseDto updateUserDetails(String username, UserUpdateRequestDto userUpdateRequestDto);
+
+    List<String> getEmailAddress(String category);
 }

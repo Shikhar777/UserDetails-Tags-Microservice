@@ -43,4 +43,9 @@ public class UserController {
     {
         return userService.updateUserDetails(username, userRequestDto);
     }
+
+    @GetMapping(value = "/emailaddress")
+    public List<String> getEmailAddress(@RequestParam("category") String category) {
+        return userService.getEmailAddress(category);
+    }
 }

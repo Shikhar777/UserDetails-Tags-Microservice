@@ -63,6 +63,12 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public List<String> getEmailAddress(String category) {
+        List<String> emails = userRepository.findByCategory(category);
+        return emails;
+    }
+
+    @Override
     public List<User> findAll()
     {
         List<User> list = new ArrayList<>();
