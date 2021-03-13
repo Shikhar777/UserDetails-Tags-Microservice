@@ -3,10 +3,7 @@ package com.example.UserDetails.entity;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity(name = "badge")
@@ -18,6 +15,7 @@ public class Badge {
     private Long badgeId;
 
     @NotBlank
+    @Column(unique = true)
     private String username;
 
     private String Ranking;

@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
-@FeignClient(name="answer-client", url="http://10.177.68.96:8083/")
+@FeignClient(name="answer-client", url="http://10.177.68.81:8080/")
 public interface AnswerClient {
     @RequestMapping(method = RequestMethod.GET, path = "/points")
     public Long findPoints(@RequestParam(value="username") String username);

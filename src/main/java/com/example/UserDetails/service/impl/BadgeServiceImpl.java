@@ -9,6 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.Optional;
+
 @Service
 public class BadgeServiceImpl implements BadgeService {
 
@@ -23,22 +25,32 @@ public class BadgeServiceImpl implements BadgeService {
         Long points = getResponseFromAnswerClient(username);
         BadgeResponseDto badgeResponseDto = new BadgeResponseDto();
         String ranking = "";
-        if(points>0) {
+        if(points<=2) {
+            ranking = "NoBadge";
+        }else if(points>2) {
             ranking = "bronze";
-        } else if(points>40) {
+        }else if(points>4) {
             ranking = "silver";
-        } else if(points>60) {
+        } else if(points>8) {
             ranking = "gold";
-        } else if(points > 100) {
+        } else if(points > 15) {
             ranking ="platinum";
         }
-
-        Badge badge = new Badge();
-        badge.setRanking(ranking);
-        badge.setUsername(username);
-        badgeRepository.save(badge);
-        badgeResponseDto.setBadgeId(badge.getBadgeId());
-        badgeResponseDto.setRanking(ranking);
+        Optional<Badge> badgeOptional = badgeRepository.findByUsername(username);
+        if(badgeOptional.isPresent()){
+            badgeOptional.get().setRanking(ranking);
+            badgeRepository.save(badgeOptional.get());
+            badgeResponseDto.setBadgeId( badgeOptional.get().getBadgeId());
+            badgeResponseDto.setRanking(badgeOptional.get().getRanking());
+        }
+        else {
+            Badge badge = new Badge();
+            badge.setRanking(ranking);
+            badge.setUsername(username);
+            badgeRepository.save(badge);
+            badgeResponseDto.setBadgeId(badge.getBadgeId());
+            badgeResponseDto.setRanking(ranking);
+        }
         return badgeResponseDto;
     }
 
