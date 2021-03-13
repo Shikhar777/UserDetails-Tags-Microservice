@@ -20,6 +20,7 @@ public class UserController {
     @Autowired
     private UserService userService;
 
+    @CrossOrigin
     @PostMapping(value = "/save")
     public UserResponseDto saveDetails(@RequestBody UserRequestDto userRequestDto)
     {
