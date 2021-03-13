@@ -31,7 +31,9 @@ public class User extends BaseEntity{
     @CreationTimestamp
     @Column
     private LocalDateTime joiningDate;
+    @Column(columnDefinition = "TEXT")
     private String bio;
+    @Column(columnDefinition = "TEXT")
     private String profileImage;
 
     @OneToMany(cascade = CascadeType.ALL)

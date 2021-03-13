@@ -16,4 +16,6 @@ public interface UserService {
     UserUpdateResponseDto updateUserDetails(String username, UserUpdateRequestDto userUpdateRequestDto);
 
     List<String> getEmailAddress(String category);
+
+    UserUpdateResponseDto checkStatus(UserUpdateRequestDto userUpdateRequestDto1,UserUpdateRequestDto userUpdateRequestDto);
 }
