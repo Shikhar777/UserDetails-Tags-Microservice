@@ -5,7 +5,7 @@ import com.example.UserDetails.service.BadgeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-@CrossOrigin("*")
+//@CrossOrigin("*")
 @RestController
 @RequestMapping("/badge")
 public class BadgeController {
