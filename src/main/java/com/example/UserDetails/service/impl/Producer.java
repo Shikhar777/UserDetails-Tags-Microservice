@@ -25,36 +25,38 @@ public class Producer implements ProducerService {
     protected static final String UPDATE_TO_SEARCH_AFTER_UPDATE = "afterUpdate";
 
     @Override
-    public void sendMessageToSearchAfterUpdation(User user)
-    {
-        logger.info(String.format("#### -> Producing Message -> %s",user.toString()));
-        ObjectMapper objectMapper = new ObjectMapper();
-        String string = "";
-        try{
-            string = objectMapper.writeValueAsString(user);
+    public void sendMessageToSearchAfterUpdation(User user) {
+        try {
+            logger.info(String.format("#### -> Producing Message -> %s", user.toString()));
+            ObjectMapper objectMapper = new ObjectMapper();
+            String string = "";
+            try {
+                string = objectMapper.writeValueAsString(user);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            kafkaTemplate.send(UPDATE_BY_USER_TO_SEARCH_AFTER_UPDATE, string);
+            logger.info(String.format("Sent to search microservice"));
+        } catch (NullPointerException e) {
+            return;
         }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        kafkaTemplate.send(UPDATE_BY_USER_TO_SEARCH_AFTER_UPDATE, string);
-        logger.info(String.format("Sent to search microservice"));
     }
 
     @Override
-    public void afterUpdation(UserUpdateResponseDto userUpdateResponseDto)
-    {
-        logger.info(String.format("#### -> Producing Message -> %s",userUpdateResponseDto.toString()));
-        ObjectMapper objectMapper = new ObjectMapper();
-        String string = "";
-        try{
-            string = objectMapper.writeValueAsString(userUpdateResponseDto);
+    public void afterUpdation(UserUpdateResponseDto userUpdateResponseDto) {
+        try {
+            logger.info(String.format("#### -> Producing Message -> %s", userUpdateResponseDto.toString()));
+            ObjectMapper objectMapper = new ObjectMapper();
+            String string = "";
+            try {
+                string = objectMapper.writeValueAsString(userUpdateResponseDto);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            kafkaTemplate.send(UPDATE_TO_SEARCH_AFTER_UPDATE, string);
+            logger.info(String.format("Sent to search microservice"));
+        } catch (NullPointerException e) {
+            return;
         }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-        }
-        kafkaTemplate.send(UPDATE_TO_SEARCH_AFTER_UPDATE, string);
-        logger.info(String.format("Sent to search microservice"));
     }
 }

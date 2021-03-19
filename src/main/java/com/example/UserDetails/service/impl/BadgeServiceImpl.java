@@ -55,7 +55,12 @@ public class BadgeServiceImpl implements BadgeService {
     }
 
     public Long getResponseFromAnswerClient(String username) {
-        Long points = answerClient.findPoints(username);
-        return points;
+        try {
+            Long points = answerClient.findPoints(username);
+            return points;
+        }catch (NullPointerException e)
+        {
+            return 0L;
+        }
     }
 }

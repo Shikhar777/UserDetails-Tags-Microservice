@@ -67,60 +67,60 @@ public class UserServiceImpl implements UserService {
         List<Employment> employment=userUpdateRequestDto.getEmployment();
         UserUpdateResponseDto userUpdateResponseDto=new UserUpdateResponseDto();
         //
-        if(firstName!=null)
+        if(firstName!="")
         {
             userUpdateResponseDto.setFirstName(firstName);
         }
-        else if(firstName1!=null) {
+        else if(firstName1!="") {
             userUpdateResponseDto.setFirstName(firstName1);
         }
-        if(lastName!=null)
+        if(lastName!="")
         {
             userUpdateResponseDto.setLastName(lastName);
         }
-        else if(lastName1!=null) {
+        else if(lastName1!="") {
             userUpdateResponseDto.setLastName(lastName1);
         }
-        if(profession!=null)
+        if(profession!="")
         {
             userUpdateResponseDto.setProfession(profession);
         }
-        else if(profession1!=null) {
+        else if(profession1!="") {
             userUpdateResponseDto.setProfession(profession1);
         }
-        if(city!=null)
+        if(city!="")
         {
             userUpdateResponseDto.setCity(city);
         }
-        else if(city1!=null) {
+        else if(city1!="") {
             userUpdateResponseDto.setCity(city1);
         }
-        if(country!=null)
+        if(country!="")
         {
             userUpdateResponseDto.setCountry(country);
         }
-        else if(country1!=null) {
+        else if(country1!="") {
             userUpdateResponseDto.setCountry(country1);
         }
-        if(state!=null)
+        if(state!="")
         {
             userUpdateResponseDto.setState(state);
         }
-        else if(state1!=null) {
+        else if(state1!="") {
             userUpdateResponseDto.setState(state1);
         }
-        if(bio!=null)
+        if(bio!="")
         {
             userUpdateResponseDto.setBio(bio);
         }
-        else if(bio1!=null) {
+        else if(bio1!="") {
             userUpdateResponseDto.setBio(bio1);
         }
-        if(profileImage!=null)
+        if(profileImage!="")
         {
             userUpdateResponseDto.setProfileImage(profileImage);
         }
-        else if(profileImage1!=null) {
+        else if(profileImage1!="") {
             userUpdateResponseDto.setProfileImage(profileImage1);
         }
         ArrayList<Education> educationsList=new ArrayList<Education>();
@@ -154,39 +154,51 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserUpdateResponseDto updateUserDetails(String username, UserUpdateRequestDto userUpdateRequestDto)
     {
-        User name = new User();
-        List<User> userList = new ArrayList<>();
-        //BeanUtils.copyProperties(userUpdateRequestDto, name);
-        name = userRepository.findByUserName(username);
-        UserUpdateRequestDto userUpdateRequestDto1=new UserUpdateRequestDto();
-        BeanUtils.copyProperties(name,userUpdateRequestDto1);
-        UserUpdateResponseDto userUpdateResponseDto1 = checkStatus(userUpdateRequestDto1,userUpdateRequestDto);
-        //
-        name.setCountry(userUpdateResponseDto1.getCountry());
-        name.setCity(userUpdateResponseDto1.getCity());
-        name.setState(userUpdateResponseDto1.getState());
-        name.setBio(userUpdateResponseDto1.getBio());
-        name.setFirstName(userUpdateResponseDto1.getFirstName());
-        name.setLastName(userUpdateResponseDto1.getLastName());
-        name.setProfession(userUpdateResponseDto1.getProfession());
-        if(!userUpdateResponseDto1.getEducation().isEmpty()) {
-            name.setEducation(userUpdateResponseDto1.getEducation());
+        try {
+            User name;
+            name = userRepository.findByUserName(username);
+            UserUpdateRequestDto userUpdateRequestDto1 = new UserUpdateRequestDto();
+            BeanUtils.copyProperties(name, userUpdateRequestDto1);
+            UserUpdateResponseDto userUpdateResponseDto1 = checkStatus(userUpdateRequestDto1, userUpdateRequestDto);
+            //
+            name.setCountry(userUpdateResponseDto1.getCountry());
+            name.setCity(userUpdateResponseDto1.getCity());
+            name.setState(userUpdateResponseDto1.getState());
+            name.setBio(userUpdateResponseDto1.getBio());
+            name.setFirstName(userUpdateResponseDto1.getFirstName());
+            name.setLastName(userUpdateResponseDto1.getLastName());
+            name.setProfession(userUpdateResponseDto1.getProfession());
+            if (!userUpdateResponseDto1.getEducation().isEmpty()) {
+                name.setEducation(userUpdateResponseDto1.getEducation());
+            }
+            if (!userUpdateResponseDto1.getEmployment().isEmpty()) {
+                name.setEmployment(userUpdateResponseDto1.getEmployment());
+            }
+            name.setProfileImage(userUpdateResponseDto1.getProfileImage());
+            User savedUser = userRepository.save(name);
+            //
+            UserUpdateResponseDto userResponseDto = new UserUpdateResponseDto();
+            BeanUtils.copyProperties(savedUser, userResponseDto);
+            producerService.afterUpdation(userResponseDto);
+            return userResponseDto;
         }
-        if(!userUpdateResponseDto1.getEmployment().isEmpty()) {
-            name.setEmployment(userUpdateResponseDto1.getEmployment());
+        catch (NullPointerException e)
+        {
+            e.printStackTrace();
+            return null;
         }
-        name.setProfileImage(userUpdateResponseDto1.getProfileImage());
-        User savedUser = userRepository.save(name);
-        //
-        UserUpdateResponseDto userResponseDto = new UserUpdateResponseDto();
-        BeanUtils.copyProperties(savedUser, userResponseDto);
-        producerService.afterUpdation(userResponseDto);
-        return userResponseDto;
     }
 
     @Override
     public List<String> getEmailAddress(String category) {
-        List<String> emails = userRepository.findByCategory(category);
+        List<String> emails = new ArrayList<>();
+        try {
+            emails = userRepository.findByCategory(category);
+            return emails;
+        }catch (NullPointerException e )
+        {
+            e.printStackTrace();
+        }
         return emails;
     }
 
@@ -202,16 +214,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponseDto getByUserName(String username)
     {
-        Optional<User> userOptional = Optional.ofNullable(userRepository.findByUserName(username));
+        Optional<User> userOptional;
+        try {
+           userOptional = Optional.ofNullable(userRepository.findByUserName(username));
+        } catch (NullPointerException ex) {
+            return null;
+        }
+
         if(userOptional.isPresent())
         {
             UserResponseDto userResponseDto = new UserResponseDto();
             BeanUtils.copyProperties(userOptional.get(), userResponseDto);
             return userResponseDto;
         }
-        else
-        {
-            return null;
-        }
+        return null;
     }
 }
