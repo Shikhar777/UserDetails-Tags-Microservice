@@ -80,6 +80,8 @@ public class BadgeServiceImplTest {
         badgeResponseDto.setRanking(badge.getRanking());
         badgeResponseDto.setBadgeId(badge.getBadgeId());
         assertEquals(badgeService.findBadge(name),badgeResponseDto);
+        Mockito.when(badgeService.findBadge(name)).thenThrow(NullPointerException.class);
+
 
 //        BadgeResponseDto badgeResponseDto1 = new BadgeResponseDto();
 //        badgeResponseDto1.setRanking(badge1.getRanking());
